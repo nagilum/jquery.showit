@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery.ShowIt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- we need the jQuery magic to perform our elaborate tasks -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+    <!-- jQuery.Overlay is a plugin to create (show/hide) an overlay over any element/document -->
+    <script type="text/javascript" src="/jquery.overlay.js"></script>
+
+    <!-- my sweet plugin -->
+    <script type="text/javascript" src="/jquery.showit.js"></script>
+
+    <!-- local stuff -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('a#showMyForm').click(function () {
+                $('div#displayForm').showit();
+            });
+            $('a#hideMyform').click(function () {
+                $('div#displayForm').hideit();
+            });
+        });
+    </script>
+</head>
+<body>
+    <a href="javascript:;" id="showMyForm">Click here to display the form</a>
+    <div id="displayForm" style="display: none; width: 50%;">
+        <h1>Look what I can do</h1>
+        <p style="color: #999; font-style: italic;">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at tristique lorem. Nunc in orci eget lorem lacinia faucibus. Suspendisse eros est, ultricies ac fermentum sed, tincidunt et nisi. Nulla id nisi sem, ut scelerisque nisl. Donec mi est, eleifend tincidunt auctor a, feugiat et mi. Ut pulvinar commodo lacus, id eleifend tellus facilisis placerat. Vestibulum auctor risus libero, eu tempor velit. Ut gravida rutrum turpis eget adipiscing. Vivamus ultricies, nunc euismod lobortis commodo, felis lectus congue augue, at aliquam felis nisl sed orci. In placerat fermentum lectus ac tincidunt. Donec mollis libero at nisi ullamcorper suscipit. Nunc non enim quam, a malesuada lectus.
+        </p>
+        <p style="color: #999; font-style: italic;">
+            Phasellus id dui eget nunc imperdiet dictum. Nullam viverra magna sit amet justo consectetur placerat egestas massa accumsan. Aliquam consectetur lorem vel sapien consectetur pulvinar. Vivamus euismod semper elit ullamcorper pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus porta lobortis. Sed sodales tincidunt felis quis facilisis. Proin imperdiet enim nec metus porta vitae tincidunt lacus euismod. Nunc mattis nulla eget eros pulvinar in condimentum erat condimentum. Nulla elementum blandit est, ultricies commodo magna dictum quis. Aliquam erat volutpat. Phasellus ut augue at risus mattis fringilla in sed enim. Suspendisse vehicula massa nec massa lobortis nec molestie justo pharetra. Curabitur libero nisi, suscipit eu sollicitudin at, volutpat eget mauris.
+        </p>
+        <p style="color: #999; font-style: italic;">
+            Pellentesque accumsan interdum tellus, ut sagittis ipsum feugiat id. Donec volutpat nisl sit amet diam porta vel vehicula metus mollis. Nunc bibendum metus non odio gravida sollicitudin. Ut congue tempor tempus. Nulla facilisi. Aliquam erat volutpat. In tincidunt auctor tellus at ullamcorper. Etiam egestas fringilla dolor, sit amet porta neque condimentum eu. Sed ultrices, mauris et viverra pretium, metus massa blandit est, at mattis sem tortor non elit. Integer mattis euismod libero, ac facilisis turpis fermentum pulvinar. Nam posuere, mauris nec porttitor pharetra, purus magna bibendum nisl, a fermentum magna turpis nec lacus. In hac habitasse platea dictumst. Nullam convallis luctus tortor, porta venenatis sapien feugiat at. Curabitur condimentum enim in erat ultrices in auctor felis suscipit. Quisque vel urna odio, eu auctor metus. Nullam vitae sodales quam. Mauris et massa a sapien venenatis dictum eu ac nulla.
+        </p>
+        <p>
+            If the jQuery.Overlay plugin is loaded, the overlay will be covering the main document body.
+            You can either click on the body itself to close this form and the overlay itself, or you can <a href="javascript:;" id="hideMyform">click this link</a> to close it programmatically.
+        </p>
+    </div>
+</body>
+</html>
