@@ -5,7 +5,7 @@
  */
 (function ($) {
     var methodsShowIt = {
-        init: function (options, c) {
+        init: function (options, c, cbHide) {
             var settings = $.extend({},
             {
                 'overlayAutoClick': true,
@@ -38,7 +38,7 @@
                             'opacity': settings.overlayOpacity,
                             'onHide': function (e) {
                                 if ($this.data('showit').shown) {
-                                    $this.hideit();
+                                    $this.hideit(options, cbHide);
                                 }
                             }
                         });
