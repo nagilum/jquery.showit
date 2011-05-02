@@ -11,14 +11,27 @@
     <script type="text/javascript" src="https://github.com/egilkh/jquery.overlay/raw/master/jquery.overlay.js"></script>
 
     <!-- my sweet plugin -->
-    <script type="text/javascript" src="/jquery.showit.js"></script>
+    <script type="text/javascript" src="jquery.showit.js"></script>
 
     <!-- local stuff -->
     <script type="text/javascript">
         $(document).ready(function () {
-            $('a#showMyForm').click(function () {
-                $('div#displayForm').showit();
+            $('a#example1').click(function () {
+                $('div#displayForm').showit({});
             });
+            $('a#example2').click(function () {
+                $('div#displayForm').showit({ borderSize: '10px', borderColor: '#0f0' });
+            });
+            $('a#example3').click(function () {
+                $('div#displayForm').showit({ closeButton: true, closeButtonText: 'Shut me down dude' });
+            });
+            $('a#example4').click(function () {
+                $('div#displayForm').showit({ fadeSpeed: 5000 });
+            });
+            $('a#example5').click(function () {
+                $('div#displayForm').showit({ fontSize: '3em', title: 'DUDE!!!', titleColor: '#f00', titleBgColor: '#ff0' });
+            });
+
             $('a#hideMyform').click(function () {
                 $('div#displayForm').hideit();
             });
@@ -26,8 +39,79 @@
     </script>
 </head>
 <body>
-    <a href="javascript:;" id="showMyForm">Click here to display the form</a>
-    <div id="displayForm" style="display: none; width: 50%;">
+    <h1>jQuery Showit</h1>
+    <p>
+        <em>A plugin for jQuery to show any element centered</em>
+    </p>
+    <p>
+        To display data with this plugin, all you have to call is <code>.showit();</code> on any element and you're set.
+        There are however several arguments you can pass along to the plugin to help you make the experience even more awesome!
+    </p>
+    <p>
+        Arguments:
+        <ul>
+            <li>
+                <strong>borderSize</strong>: This overrides the CSS for the element you're calling and sets a border acording to <em>borderSize</em> and <em>borderColor</em>.<br />
+                default: 0px
+            </li>
+            <li>
+                <strong>borderColor</strong>: See <em>borderSize</em> above.<br />
+                default: #000
+            </li>
+            <li>
+                <strong>closeButton</strong>: A boolean to display the close button.<br />
+                default: false
+            </li>
+            <li>
+                <strong>closeButtonText</strong>: The text on the close button if it's shown.<br />
+                default: Close
+            </li>
+            <li>
+                <strong>fadeSpeed</strong>: The speed of which to fade the element in and out, in ms.<br />
+                default: 400
+            </li>
+            <li>
+                <strong>fontSize</strong>: The font-size to display the title and close button with.<br />
+                default: .8em
+            </li>
+            <li>
+                <strong>overlayAutoClick</strong>: If the overlay plugin is included in the project, this will forward the autoClick setting to it.<br />
+                default: true
+            </li>
+            <li>
+                <strong>overlayOpacity</strong>: Same as above with the overlay plugin, this time the opacity setting.<br />
+                default: 0.5
+            </li>
+            <li>
+                <strong>title</strong>: The title to display below the element along with the close button.<br />
+                default: <em>The title-attribute of the called element</em>
+            </li>
+            <li>
+                <strong>titleColor</strong>: The color to apply to the title string being shown.<br />
+                default: #000
+            </li>
+            <li>
+                <strong>titleBgColor</strong>: The background color to apply to the frame containing the title and close button.<br />
+                default: #ccc
+            </li>
+            <li>
+                <strong>zIndex</strong>: The elements place in the order of things. Best not tamper with this one.<br />
+                default: 999
+            </li>
+        </ul>
+    </p>
+    <p>
+        Examples:
+        <ul>
+            <li><a href="javascript:;" id="example1">.showit();</a></li>
+            <li><a href="javascript:;" id="example2">.showit({ borderSize: 10, borderColor: '#0f0' });</a></li>
+            <li><a href="javascript:;" id="example3">.showit({ closeButton: true, closeButtonText: 'Shut me down dude' });</a></li>
+            <li><a href="javascript:;" id="example4">.showit({ fadeSpeed: 5000 });</a></li>
+            <li><a href="javascript:;" id="example5">.showit({ fontSize: '3em', title: 'DUDE!!!', titleColor: '#f00', titleBgColor: '#ff0' });</a></li>
+        </ul>
+    </p>
+
+    <div id="displayForm" style="display: none; width: 50%; background: #fff;">
         <h1>Look what I can do</h1>
         <p style="color: #999; font-style: italic;">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at tristique lorem. Nunc in orci eget lorem lacinia faucibus. Suspendisse eros est, ultricies ac fermentum sed, tincidunt et nisi. Nulla id nisi sem, ut scelerisque nisl. Donec mi est, eleifend tincidunt auctor a, feugiat et mi. Ut pulvinar commodo lacus, id eleifend tellus facilisis placerat. Vestibulum auctor risus libero, eu tempor velit. Ut gravida rutrum turpis eget adipiscing. Vivamus ultricies, nunc euismod lobortis commodo, felis lectus congue augue, at aliquam felis nisl sed orci. In placerat fermentum lectus ac tincidunt. Donec mollis libero at nisi ullamcorper suscipit. Nunc non enim quam, a malesuada lectus.
