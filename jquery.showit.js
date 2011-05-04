@@ -45,10 +45,11 @@
                         $.overlay({
                             'autoClick': settings.overlayAutoClick,
                             'opacity': settings.overlayOpacity,
-                            'onHide': function (e) {
-                                if ($this.data('showit').shown) {
-                                    $this.hideit(options, cbHide);
-                                }
+                            'onHide': function () {
+                                    if ($this.data('showit').shown) {
+                                        console.log($this);
+                                        $this.hideit(options, cbHide);
+                                    }
                             }
                         });
                     }
@@ -142,6 +143,7 @@
                 // if jquery.overlay.js is loaded, call it
                 if (typeof ($.fn.overlay) === 'function') {
                     $.overlay('hide');
+                    $('div.showitBottomFrame').remove();
                 }
 
                 $this
