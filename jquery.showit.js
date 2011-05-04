@@ -46,10 +46,9 @@
                             'autoClick': settings.overlayAutoClick,
                             'opacity': settings.overlayOpacity,
                             'onHide': function () {
-                                    if ($this.data('showit').shown) {
-                                        console.log($this);
-                                        $this.hideit(options, cbHide);
-                                    }
+                                if ($this.data('showit').shown) {
+                                    $this.hideit(options, cbHide);
+                                }
                             }
                         });
                     }
@@ -67,12 +66,12 @@
                 }
 
                 // get title from tag
-                if (settings.title == '') {
+                if (!settings.title) {
                     settings.title = $this.attr('title');
                 }
 
                 // show title and closebutton
-                if (settings.title != '' || settings.closeButton) {
+                if (settings.title || settings.closeButton) {
                     var bfd = $('div.showitBottomFrame');
                     if (bfd.length == 0) {
                         bfd = $('<div />').addClass('showitBottomFrame').css({ 'background-color': settings.titleBgColor, 'clear': 'both', 'overflow': 'auto', 'padding': '.5em' });
