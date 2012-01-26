@@ -14,6 +14,7 @@
                 'closeButtonText': 'Close',
                 'fadeSpeed': 400,
                 'fontSize': '.8em',
+                'overlayObject': 'body',
                 'overlayAutoClick': true,
                 'overlayOpacity': 0.5,
                 'title': '',
@@ -42,7 +43,7 @@
                 // if jquery.overlay.js is loaded, call it
                 if (settings.overlayAutoClick) {
                     if (typeof ($.fn.overlay) === 'function') {
-                        $.overlay({
+                        $(settings.overlayObject).overlay({
                             'autoClick': settings.overlayAutoClick,
                             'opacity': settings.overlayOpacity,
                             'onHide': function () {
@@ -125,6 +126,7 @@
         init: function (options, c) {
             var settings = $.extend({},
             {
+                'overlayObject': 'body',
                 'fadeSpeed': 400
             }, options);
             return this.each(function () {
@@ -141,7 +143,7 @@
 
                 // if jquery.overlay.js is loaded, call it
                 if (typeof ($.fn.overlay) === 'function') {
-                    $.overlay('hide');
+                    $(settings.overlayObject).overlay('hide');
                     $('div.showitBottomFrame').remove();
                 }
 
