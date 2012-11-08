@@ -1,131 +1,123 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <title>jQuery.ShowIt</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <head>
+    <meta charset="utf-8" />
+    <title>Demo of jQuery plugin; showit</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/egilkh/jquery.overlay/master/jquery.overlay.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/nagilum/jquery.showit/master/jquery.showit.js"></script>
+    <style type="text/css">
+      p
+      {
+        margin: 0 0 1.3em;
+        padding: 0;
+      }
+      span
+      {
+        clear: both;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>jQuery.showit</h1>
+    <span>jQuery plugin to show any element centered on the visible screen</span>
+    <span>Author: Stian Hanger (<a href="mailto:pdnagilum@gmail.com">pdnagilum@gmail.com</a>)</span>
 
-    <!-- we need the jQuery magic to perform our elaborate tasks -->
-    <script type="text/javascript" src="jquery-1.6.min.js"></script>
+    <h2>Settings</h2>
+    <ul>
+      <li>
+        fadeSpeed - int - optional - default: 400
+        <span>The speed at which the element is to fade in. Setting 0 will make it instant.</span>
+      </li>
+      <li>
+        zIndex - int - optional - default: 999
+        <span>The CSS z-index to be set on the element.</span>
+      </li>
+      <li>
+        css - json - optional
+        <span>Other CSS settings to be passed to the element.</span>
+      </li>
+      <li>
+        overlayUseIfLoaded - boolean - optional - default: false
+        <span>Use overlay if it is loaded.</span>
+      </li>
+      <li>
+        overlayObject - object - optional - default: document
+        <span>The javascript object to attach overlay too.</span>
+      </li>
+      <li>
+        overlayOptions - json - optional
+        <span>An array of settings to pass along to overlay.</span>
+      </li>
+    </ul>
 
-    <!-- jQuery.Overlay is a plugin to create (show/hide) an overlay over any element/document -->
-    <script type="text/javascript" src="jquery.overlay.js"></script>
+    <h2>Try it</h2>
+    <ul>
+      <li>
+        <a href="javascript:;" class="example1">.showit()</a>
+        <span>The most basic call. This will display the called element and show it centered.</span>
+      </li>
+      <li>
+        <a href="javascript:;" class="example2">.showit({ fadeSpeed: 4000 })</a>
+        <span>Here the fade speed is greatly increased, slowing the fade-in.</span>
+      </li>
+      <li>
+        <a href="javascript:;" class="example3">.showit({ css: { 'background': '#eee', 'border': 'solid 5px #aaa', 'padding': '10px' } })</a>
+        <span>Here we pass along CSS style to the element.</span>
+      </li>
+    </ul>
 
-    <!-- my sweet plugin -->
-    <script type="text/javascript" src="jquery.showit.js"></script>
+    <h2>Try it with overlay</h2>
+    <span>overlay is a jQuery plugin to add an overlaying effect, which works great with showit.</span>
+    <span>Read more about it on <a href="https://github.com/egilkh/jquery.overlay">https://github.com/egilkh/jquery.overlay</a></span>
+    <ul>
+      <a href="javascript:;" class="example4">.showit({ overlayUseIfLoaded: true, css: { 'background': '#eee', 'border': 'solid 5px #aaa', 'padding': '10px' } })</a>
+      <span>Basic call with overlay.</span>
+    </ul>
 
-    <!-- local stuff -->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('a#example1').click(function () {
-                $('div#displayForm').showit({});
-            });
-            $('a#example2').click(function () {
-                $('div#displayForm').showit({ borderSize: '10px', borderColor: '#0f0' });
-            });
-            $('a#example3').click(function () {
-                $('div#displayForm').showit({ closeButton: true, closeButtonText: 'Shut me down dude' });
-            });
-            $('a#example4').click(function () {
-                $('div#displayForm').showit({ fadeSpeed: 5000 });
-            });
-            $('a#example5').click(function () {
-                $('div#displayForm').showit({ fontSize: '3em', title: 'DUDE!!!', titleColor: '#f00', titleBgColor: '#ff0' });
-            });
-
-            $('a#hideMyform').click(function () {
-                $('div#displayForm').hideit();
-            });
-        });
-    </script>
-</head>
-<body>
-    <h1>jQuery Showit</h1>
-    <p>
-        <em>A plugin for jQuery to show any element centered</em>
-    </p>
-    <p>
-        To display data with this plugin, all you have to call is <code>.showit();</code> on any element and you're set.
-        There are however several arguments you can pass along to the plugin to help you make the experience even more awesome!
-    </p>
-    <p>
-        Arguments:
-        <ul>
-            <li>
-                <strong>borderSize</strong>: This overrides the CSS for the element you're calling and sets a border acording to <em>borderSize</em> and <em>borderColor</em>.<br />
-                default: 0px
-            </li>
-            <li>
-                <strong>borderColor</strong>: See <em>borderSize</em> above.<br />
-                default: #000
-            </li>
-            <li>
-                <strong>closeButton</strong>: A boolean to display the close button.<br />
-                default: false
-            </li>
-            <li>
-                <strong>closeButtonText</strong>: The text on the close button if it's shown.<br />
-                default: Close
-            </li>
-            <li>
-                <strong>fadeSpeed</strong>: The speed of which to fade the element in and out, in ms.<br />
-                default: 400
-            </li>
-            <li>
-                <strong>fontSize</strong>: The font-size to display the title and close button with.<br />
-                default: .8em
-            </li>
-            <li>
-                <strong>overlayAutoClick</strong>: If the overlay plugin is included in the project, this will forward the autoClick setting to it.<br />
-                default: true
-            </li>
-            <li>
-                <strong>overlayOpacity</strong>: Same as above with the overlay plugin, this time the opacity setting.<br />
-                default: 0.5
-            </li>
-            <li>
-                <strong>title</strong>: The title to display below the element along with the close button.<br />
-                default: <em>The title-attribute of the called element</em>
-            </li>
-            <li>
-                <strong>titleColor</strong>: The color to apply to the title string being shown.<br />
-                default: #000
-            </li>
-            <li>
-                <strong>titleBgColor</strong>: The background color to apply to the frame containing the title and close button.<br />
-                default: #ccc
-            </li>
-            <li>
-                <strong>zIndex</strong>: The elements place in the order of things. Best not tamper with this one.<br />
-                default: 999
-            </li>
-        </ul>
-    </p>
-    <p>
-        Examples:
-        <ul>
-            <li><a href="javascript:;" id="example1">.showit();</a></li>
-            <li><a href="javascript:;" id="example2">.showit({ borderSize: 10, borderColor: '#0f0' });</a></li>
-            <li><a href="javascript:;" id="example3">.showit({ closeButton: true, closeButtonText: 'Shut me down dude' });</a></li>
-            <li><a href="javascript:;" id="example4">.showit({ fadeSpeed: 5000 });</a></li>
-            <li><a href="javascript:;" id="example5">.showit({ fontSize: '3em', title: 'DUDE!!!', titleColor: '#f00', titleBgColor: '#ff0' });</a></li>
-        </ul>
-    </p>
-
-    <div id="displayForm" style="display: none; width: 50%; background: #fff;">
-        <h1>Look what I can do</h1>
-        <p style="color: #999; font-style: italic;">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at tristique lorem. Nunc in orci eget lorem lacinia faucibus. Suspendisse eros est, ultricies ac fermentum sed, tincidunt et nisi. Nulla id nisi sem, ut scelerisque nisl. Donec mi est, eleifend tincidunt auctor a, feugiat et mi. Ut pulvinar commodo lacus, id eleifend tellus facilisis placerat. Vestibulum auctor risus libero, eu tempor velit. Ut gravida rutrum turpis eget adipiscing. Vivamus ultricies, nunc euismod lobortis commodo, felis lectus congue augue, at aliquam felis nisl sed orci. In placerat fermentum lectus ac tincidunt. Donec mollis libero at nisi ullamcorper suscipit. Nunc non enim quam, a malesuada lectus.
-        </p>
-        <p style="color: #999; font-style: italic;">
-            Phasellus id dui eget nunc imperdiet dictum. Nullam viverra magna sit amet justo consectetur placerat egestas massa accumsan. Aliquam consectetur lorem vel sapien consectetur pulvinar. Vivamus euismod semper elit ullamcorper pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus porta lobortis. Sed sodales tincidunt felis quis facilisis. Proin imperdiet enim nec metus porta vitae tincidunt lacus euismod. Nunc mattis nulla eget eros pulvinar in condimentum erat condimentum. Nulla elementum blandit est, ultricies commodo magna dictum quis. Aliquam erat volutpat. Phasellus ut augue at risus mattis fringilla in sed enim. Suspendisse vehicula massa nec massa lobortis nec molestie justo pharetra. Curabitur libero nisi, suscipit eu sollicitudin at, volutpat eget mauris.
-        </p>
-        <p style="color: #999; font-style: italic;">
-            Pellentesque accumsan interdum tellus, ut sagittis ipsum feugiat id. Donec volutpat nisl sit amet diam porta vel vehicula metus mollis. Nunc bibendum metus non odio gravida sollicitudin. Ut congue tempor tempus. Nulla facilisi. Aliquam erat volutpat. In tincidunt auctor tellus at ullamcorper. Etiam egestas fringilla dolor, sit amet porta neque condimentum eu. Sed ultrices, mauris et viverra pretium, metus massa blandit est, at mattis sem tortor non elit. Integer mattis euismod libero, ac facilisis turpis fermentum pulvinar. Nam posuere, mauris nec porttitor pharetra, purus magna bibendum nisl, a fermentum magna turpis nec lacus. In hac habitasse platea dictumst. Nullam convallis luctus tortor, porta venenatis sapien feugiat at. Curabitur condimentum enim in erat ultrices in auctor felis suscipit. Quisque vel urna odio, eu auctor metus. Nullam vitae sodales quam. Mauris et massa a sapien venenatis dictum eu ac nulla.
-        </p>
-        <p>
-            If the jQuery.Overlay plugin is loaded, the overlay will be covering the main document body.
-            You can either click on the body itself to close this form and the overlay itself, or you can <a href="javascript:;" id="hideMyform">click this link</a> to close it programmatically.
-        </p>
+    <div class="demoframe" style="display: none; width: 50%;">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in venenatis elit. Suspendisse potenti. Vestibulum erat ipsum, dapibus sollicitudin fringilla eu, ultricies in dolor. Suspendisse molestie pretium libero sit amet blandit. Aliquam id tristique massa. Nam porta porttitor tellus nec aliquet. Nullam quis lobortis odio. Nullam varius imperdiet ullamcorper. In blandit, erat non interdum imperdiet, libero felis ornare libero, porta aliquam magna purus vitae turpis. Quisque ut diam id ligula tincidunt mollis vitae vel tortor. Suspendisse potenti. Pellentesque vestibulum nisl vitae nunc eleifend sagittis sed quis turpis. In non ante quis risus convallis ultrices. Cras et facilisis augue.</p>
+      <p>Phasellus egestas enim a lectus vestibulum semper. Cras magna massa, scelerisque non condimentum a, luctus et elit. Quisque nec nulla sed purus viverra molestie sed quis nisi. Sed hendrerit posuere ipsum rhoncus placerat. Etiam faucibus nunc eget libero tincidunt ac semper mauris porttitor. Mauris quis metus nisl. Quisque quis eleifend mi. Suspendisse tincidunt, quam id vulputate venenatis, odio enim consequat enim, vel vulputate leo augue nec elit. Maecenas nec purus quis dui rhoncus cursus.</p>
+      <p>Donec mattis arcu ac elit commodo luctus. Donec iaculis fermentum scelerisque. Sed in quam a tortor venenatis aliquam. Nullam ultrices nibh eget est aliquet ultricies. In hac habitasse platea dictumst. Donec nibh elit, lobortis et aliquet vitae, mollis eu massa. Phasellus id ipsum id mauris sollicitudin accumsan vel ut libero. Curabitur pellentesque ultricies sapien at tincidunt. Sed ut tristique urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna odio, feugiat eu suscipit et, tempor eget arcu. Cras dignissim purus eget lacus ultrices sollicitudin. Nulla facilisi. Phasellus eget ligula quis lorem blandit pharetra vitae eget ipsum. Vivamus ligula ante, vulputate vitae volutpat vel, consectetur et velit.</p>
+      <p>Sed at velit nec eros imperdiet porttitor sed vel diam. Curabitur ac diam nec orci hendrerit fermentum. Curabitur adipiscing ultrices urna ut laoreet. Curabitur accumsan mauris sit amet risus tempus gravida. Fusce mauris dolor, pretium in aliquet vitae, accumsan quis justo. Sed ac malesuada nunc. Etiam gravida nibh eu est luctus dictum dignissim felis fringilla. Morbi non massa non sem venenatis faucibus. Morbi id est sapien. Nullam commodo condimentum est, sit amet feugiat velit elementum a. Etiam viverra, est ut tincidunt rutrum, libero purus rhoncus eros, non interdum eros eros in turpis. Vivamus malesuada lacus id massa dictum sagittis. Vestibulum tristique elementum risus, in convallis libero vestibulum vitae.</p>
+      <p>Praesent aliquam pulvinar nibh sed egestas. Duis feugiat odio id dui dictum tincidunt. Pellentesque volutpat, odio eget elementum pellentesque, nulla enim iaculis mi, at volutpat metus risus ut erat. Phasellus tortor tortor, lobortis eget varius lobortis, commodo non nisi. Vivamus vel justo turpis. Cras blandit nulla sed leo tristique laoreet. Integer fringilla mauris ac magna fringilla eget ultrices purus ultricies. </p>
+      <p>
+        <a href="javascript:;" onclick="$('div.demoframe').hideit();">.hideit()</a><br />
+        <a href="javascript:;" onclick="$('div.demoframe').hideit({ fadeSpeed: 2000 });">.hideit({ fadeSpeed: 2000 })</a>
+      </p>
     </div>
-</body>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('a.example1').click(function () {
+          $('div.demoframe').showit();
+        });
+        $('a.example2').click(function () {
+          $('div.demoframe').showit({
+            fadeSpeed: 4000
+          });
+        });
+        $('a.example3').click(function () {
+          $('div.demoframe').showit({
+            css: {
+              'background': '#eee',
+              'border': 'solid 5px #aaa',
+              'padding': '10px'
+            }
+          });
+        });
+        $('a.example4').click(function () {
+          $('div.demoframe').showit({
+            overlayUseIfLoaded: true,
+            css: {
+              'background': '#eee',
+              'border': 'solid 5px #aaa',
+              'padding': '10px'
+            }
+          });
+        })
+      });
+    </script>
+  </body>
 </html>

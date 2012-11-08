@@ -1,180 +1,129 @@
-﻿/*
- * jquery.showit.js, jQuery plugin to display any element centered
+/**
+ * @file
+ *   jQuery plugin to show any element centered on the visible screen.
  *
- * Copyright 2011, Stian Hanger (pdnagilum@gmail.com)
+ * @author
+ *   Stian Hanger, pdnagilum@gmail.com
  */
+
 (function ($) {
-    var methodsShowIt = {
-        init: function (options, c, cbHide) {
-            var settings = $.extend({},
-            {
-                'borderSize': '0px',
-                'borderColor': '#000',
-                'closeButton': false,
-                'closeButtonText': 'Close',
-                'fadeSpeed': 400,
-                'fontSize': '.8em',
-                'overlayObject': 'body',
-                'overlayAutoClick': true,
-                'overlayOpacity': 0.5,
-                'title': '',
-                'titleColor': '#000',
-                'titleBgColor': '#ccc',
-                'zIndex': 999
-            }, options);
-            return this.each(function () {
-                // declare
-                var $this = $(this);
-                var windowHeight = $(window).height();
-                var windowWidth = $(window).width();
-                var elementHeight = $this.height();
-                var elementWidth = $this.width();
-                var elementLeft = 0;
-                var elementTop = 0;
+  var methodsShowIt = {
+    init: function (options, c) {
+      var settings = $.extend({}, {
+        // Settings for showit.
+        'fadeSpeed': 400,
+        'zIndex': 999,
+        'css': {},
 
-                // set the element as shows
-                $this.data('showit', { 'shown': true });
+        // Settings for overlay, if loaded.
+        'overlayUseIfLoaded': false,
+        'overlayObject': document,
+        'overlayOptions': {}
+      }, options);
 
-                // check for valid element
-                if ($this.length == 0) {
-                    $.error('Element does not exist');
-                }
+      return this.each(function () {
+        var element = $(this);
 
-                // if jquery.overlay.js is loaded, call it
-                if (settings.overlayAutoClick) {
-                    if (typeof ($.fn.overlay) === 'function') {
-                        $(settings.overlayObject).overlay({
-                            'autoClick': settings.overlayAutoClick,
-                            'opacity': settings.overlayOpacity,
-                            'onHide': function () {
-                                if ($this.data('showit').shown) {
-                                    $this.hideit(options, cbHide);
-                                }
-                            }
-                        });
-                    }
-                }
-
-                // calculate top/left
-                if (windowHeight > elementHeight) { elementTop = ((windowHeight - elementHeight) / 2) + $(window).scrollTop(); }
-                if (windowWidth > elementWidth) { elementLeft = ((windowWidth - elementWidth) / 2); }
-
-                // apply border
-                if (settings.borderSize != '0px') {
-                    $this.css({
-                        'border': 'solid ' + settings.borderSize + ' ' + settings.borderColor
-                    });
-                }
-
-                // get title from tag
-                if (!settings.title) {
-                    settings.title = $this.attr('title');
-                }
-
-                // show title and closebutton
-                if (settings.title || settings.closeButton) {
-                    var bfd = $('div.showitBottomFrame');
-                    if (bfd.length == 0) {
-                        bfd = $('<div />').addClass('showitBottomFrame').css({ 'background-color': settings.titleBgColor, 'clear': 'both', 'overflow': 'auto', 'padding': '.5em' });
-                        $this.append(bfd);
-                    }
-
-                    if (settings.title != '') {
-                        var ts = $('span.showitTitle');
-                        if (ts.length > 0) {
-                            ts.css({ 'font-size': settings.fontSize, 'color': settings.titleColor, 'display': 'block', 'float': 'left' }).html(settings.title);
-                        } else {
-                            ts = $('<span />').addClass('showitTitle').css({ 'font-size': settings.fontSize, 'color': settings.titleColor, 'display': 'block', 'float': 'left' }).html(settings.title);
-                            bfd.append(ts);
-                        }
-                    }
-                    if (settings.closeButton) {
-                        var cb = $('a.showitCloseButton');
-                        if (cb.length > 0) {
-                            cb.css({ 'font-size': settings.fontSize, 'display': 'block', 'float': 'right' }).attr('href', 'javascript:;').html(settings.closeButtonText);
-                        } else {
-                            cb = $('<a />').addClass('showitCloseButton').css({ 'font-size': settings.fontSize, 'display': 'block', 'float': 'right' }).attr('href', 'javascript:;').html(settings.closeButtonText);
-                            bfd.append(cb);
-
-                            cb.click(function () {
-                                $this.hideit({ fadeSpeed: settings.fadeSpeed });
-                            });
-                        }
-                    }
-                }
-
-                // show form
-                $this
-                .css({
-                    'left': elementLeft,
-                    'position': 'absolute',
-                    'top': elementTop,
-                    'zIndex': settings.zIndex
-                })
-                .fadeIn(
-                    settings.fadeSpeed,
-                    function (e) {
-                        if (c) {
-                            c.call($this);
-                        }
-                    }
-                );
-            });
+        if (element.length == 0) {
+          $.error('Element does not exist!');
         }
-    };
-    var methodsHideId = {
-        init: function (options, c) {
-            var settings = $.extend({},
-            {
-                'overlayObject': 'body',
-                'fadeSpeed': 400
-            }, options);
-            return this.each(function () {
-                // declare
-                var $this = $(this);
 
-                // set the element as hidden
-                $this.data('showit').shown = false;
+        var windowHeight = $(window).height();
+        var windowWidth = $(window).width();
+        var elementHeight = element.height();
+        var elementWidth = element.width();
+        var elementLeft = 0;
+        var elementTop = 0;
 
-                // check for valid element
-                if ($this.length == 0) {
-                    $.error('Element does not exist');
-                }
+        element.data('showit', {
+          'shown': true
+        });
 
-                // if jquery.overlay.js is loaded, call it
-                if (typeof ($.fn.overlay) === 'function') {
-                    $(settings.overlayObject).overlay('hide');
-                    $('div.showitBottomFrame').remove();
-                }
-
-                $this
-                .fadeOut(
-                    settings.fadeSpeed,
-                    function (e) {
-                        if (c) {
-                            c.call($this);
-                        }
-                    }
-                );
-            });
+        if (typeof ($.fn.overlay) === 'function' && settings.overlayUseIfLoaded) {
+          settings.overlayOptions.onHide = function () {
+            if (element.data('showit').shown) {
+              element.hideit(options);
+            }
+          }
+          $(settings.overlayObject).overlay(settings.overlayOptions);
         }
-    };
-    $.fn.showit = function (method) {
-        if (methodsShowIt[method]) {
-            return methodsShowIt[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof (method) === 'object' || !method) {
-            return methodsShowIt.init.apply(this, arguments);
-        } else {
-            $.error('Method ' + method + ' does not exist on jQuery.ShowIt');
+
+        if (windowHeight > elementHeight) { elementTop = ((windowHeight - elementHeight) / 2) + $(window).scrollTop(); }
+        if (windowWidth > elementWidth) { elementLeft = ((windowWidth - elementWidth) / 2); }
+
+        element
+          .css({
+            'left': elementLeft,
+            'position': 'absolute',
+            'top': elementTop,
+            'zIndex': settings.zIndex
+          })
+          .css(settings.css)
+          .fadeIn(
+            settings.fadeSpeed,
+            function (e) {
+              if (c) {
+                c.call(element);
+              }
+            }
+          );
+      });
+    }
+  };
+  var methodsHideIt = {
+    init: function (options, c) {
+      var settings = $.extend({}, {
+        // Settings for showit.
+        'fadeSpeed': 400,
+
+        // Settings for overlay, if loaded.
+        'overlayUseIfLoaded': true,
+        'overlayObject': document,
+        'overlayOptions': {}
+      }, options);
+
+      return this.each(function () {
+        var element = $(this);
+
+        if (element.length == 0) {
+          $.error('Element does not exist!');
         }
-    };
-    $.fn.hideit = function (method) {
-        if (methodsHideId[method]) {
-            return methodsHideId[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof (method) === 'object' || !method) {
-            return methodsHideId.init.apply(this, arguments);
-        } else {
-            $.error('Method ' + method + ' does not exist on jQuery.HideIt');
+
+        element.data('showit').shown = false;
+
+        if (typeof ($.fn.overlay) === 'function' && settings.overlayUseIfLoaded) {
+          $(settings.overlayObject).overlay('hide');
         }
-    };
+
+        element
+          .fadeOut(
+            settings.fadeSpeed,
+            function (e) {
+              if (c) {
+                c.call(element);
+              }
+            }
+          );
+      });
+    }
+  };
+
+  $.fn.showit = function (method) {
+    if (methodsShowIt[method]) {
+      return methodsShowIt[method].apply(this, Array.prototype.slice.call(arguments, 1));
+    } else if (typeof (method) === 'object' || !method) {
+      return methodsShowIt.init.apply(this, arguments);
+    } else {
+      $.error('Method ' + method + ' does not exist on jQuery.ShowIt');
+    }
+  };
+  $.fn.hideit = function (method) {
+    if (methodsHideIt[method]) {
+      return methodsHideIt[method].apply(this, Array.prototype.slice.call(arguments, 1));
+    } else if (typeof (method) === 'object' || !method) {
+      return methodsHideIt.init.apply(this, arguments);
+    } else {
+      $.error('Method ' + method + ' does not exist on jQuery.HideIt');
+    }
+  };
 })(jQuery);
