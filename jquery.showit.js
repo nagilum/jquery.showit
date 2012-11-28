@@ -1,6 +1,6 @@
 /**
  * @file
- *   jQuery plugin to show any element centered on the visible screen.
+ * jQuery plugin to show any element centered on the visible screen.
  *
  * @author
  *   Stian Hanger, pdnagilum@gmail.com
@@ -14,6 +14,7 @@
         'fadeSpeed': 400,
         'zIndex': 999,
         'css': {},
+        'maxWidthPercent': 80,
 
         // Settings for overlay, if loaded.
         'overlayUseIfLoaded': false,
@@ -34,6 +35,26 @@
         var elementWidth = element.width();
         var elementLeft = 0;
         var elementTop = 0;
+
+        if (settings.maxWidthPercent < 100 && settings.maxWidthPercent > 0 && elementWidth > windowWidth) {
+          var diff = elementWidth - windowWidth;
+          var diffPercent = (100 / elementWidth) * diff;
+          var diffPercentOperator = parseFloat('0.' + diffPercent.toString());
+
+          elementWidth = windowWidth;
+          elementHeight = elementHeight - (elementHeight * diffPercentOperator);
+
+          var percent = parseFloat('0.' + settings.maxWidthPercent.toString());
+
+          elementWidth = elementWidth * percent;
+          elementHeight = elementHeight * percent;
+
+          element
+            .css({
+              'height': elementHeight,
+              'width': elementWidth
+            });
+        }
 
         element.data('showit', {
           'shown': true
