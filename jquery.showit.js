@@ -18,7 +18,7 @@
         'clickToClose': false,
 
         // Settings for overlay, if loaded.
-        'overlayUseIfLoaded': false,
+        'useOverlay': false,
         'overlayObject': document,
         'overlayOptions': {}
       }, options);
