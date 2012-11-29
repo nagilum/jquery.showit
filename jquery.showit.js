@@ -15,6 +15,7 @@
         'zIndex': 999,
         'css': {},
         'maxWidthPercent': 80,
+        'clickToClose': false,
 
         // Settings for overlay, if loaded.
         'overlayUseIfLoaded': false,
@@ -87,7 +88,12 @@
                 c.call(element);
               }
             }
-          );
+          )
+          .click(function () {
+            if (settings.clickToClose) {
+              element.hideit();
+            }
+          });
       });
     }
   };
